@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZCalc.Tests", "ZCalc.Tests\ZCalc.Tests.csproj", "{629A4F81-44BC-4A37-8622-762A064A5D58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZCalc", "ZCalc\ZCalc.csproj", "{131212B4-B50D-4DB4-9E8F-F72ED32129F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZCalc.Blazor", "ZCalc.Blazor\ZCalc.Blazor.csproj", "{786262F0-A4D0-4332-A5C4-3E2AAD426688}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{629A4F81-44BC-4A37-8622-762A064A5D58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{629A4F81-44BC-4A37-8622-762A064A5D58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{629A4F81-44BC-4A37-8622-762A064A5D58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{629A4F81-44BC-4A37-8622-762A064A5D58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{131212B4-B50D-4DB4-9E8F-F72ED32129F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{131212B4-B50D-4DB4-9E8F-F72ED32129F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{131212B4-B50D-4DB4-9E8F-F72ED32129F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{131212B4-B50D-4DB4-9E8F-F72ED32129F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{786262F0-A4D0-4332-A5C4-3E2AAD426688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{786262F0-A4D0-4332-A5C4-3E2AAD426688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{786262F0-A4D0-4332-A5C4-3E2AAD426688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{786262F0-A4D0-4332-A5C4-3E2AAD426688}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
