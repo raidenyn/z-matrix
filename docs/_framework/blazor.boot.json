@@ -35,17 +35,17 @@
       "System.Runtime.dll": "sha256-5s+uzT6wmT1W05hmci93IbaU80KoO\/uiN8CJUNWrhBs=",
       "System.Text.Encodings.Web.dll": "sha256-8MgxqGsBjU\/FR\/ntwAQr0x\/AG7jJ9f8Kn9shBpC23Dc=",
       "System.Text.Json.dll": "sha256-ULbKXO6ATSrr1KCdM7RjfpjJj7EQc6F6VC7Qu4RnxxM=",
-      "ZCalc.Blazor.dll": "sha256-PxEoKhhec6hoAlJGnstZn73\/u4firqfmuHdnSCaytNE=",
-      "ZCalc.dll": "sha256-kXgGIRuVfZQsGu1feprrmQQKPca\/qtTsMy\/cBKTmGl0="
+      "ZCalc.Blazor.dll": "sha256-Ab2S5kNqGw0YRUexdh7QEMcMRX\/sf4xB1RtNk8Erx\/o=",
+      "ZCalc.dll": "sha256-uuVBKAlYYONa792yeBwyRhrtzqahTSQIKu\/HNaYi0ho="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": null,
     "runtime": {
-      "dotnet.6.0.1.297x2l7w60.js": "sha256-Z1KIvx\/UFrj+TZ9L+D67I+GlfJ9qa6KYzo9s4g\/K\/\/8=",
+      "dotnet.6.0.1.297x2l7w60.js": "sha256-9gjJC0VOsfg88+uck74lcyE+uRe+A1cm6sQzravZ5\/o=",
       "dotnet.timezones.blat": "sha256-2kYo2V\/aZ7htYEvY5PVJlrMYhFf1jH8\/VS+SP7B7QUg=",
-      "dotnet.wasm": "sha256-fHRTUxIf5kMv2H4AW8Hp7kU6c0BLMbOkV7Ku7e8\/EuA=",
+      "dotnet.wasm": "sha256-GF3xO1QcOuI0tj3EOpnhEd+27s\/AMSaTNGiXRh9i7G0=",
       "icudt_CJK.dat": "sha256-WPyI4hWDPnOw62Nr27FkzGjdbucZnQD+Ph+GOPhAedw=",
       "icudt_EFIGS.dat": "sha256-4RwaPx87Z4dvn77ie\/ro3\/QzyS+\/gGmO3Y\/0CSAXw4k=",
       "icudt_no_CJK.dat": "sha256-OxylFgLJlFqixsj+nLxYVsv5iZLvfIKMpLf9hrWaChA=",
