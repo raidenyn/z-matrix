@@ -72,7 +72,7 @@ namespace ZCalc
             
             IReadOnlyMatrix translate = Matrices.Translation(distance.Point);
             Vector a1 = translate.Multiply(angle.Point);
-            IReadOnlyMatrix reverseRotateAngle = GetRotationMatrix(-Vector.OrtX, a1);
+            IReadOnlyMatrix reverseRotateAngle = GetRotationMatrix(-Vector.OrtX, a1, Vector.OrtZ);
             
             if (zPoint.Dihedral is not { } dihedral)
             {
@@ -80,11 +80,11 @@ namespace ZCalc
                 return reverseTranslate.Multiply(reverseRotateAngle.Multiply(rotate.Multiply((-distance.Value, 0, 0))));
             }
             
-            IReadOnlyMatrix rotateAngle = GetRotationMatrix(a1, -Vector.OrtX);
+            IReadOnlyMatrix rotateAngle = GetRotationMatrix(a1, -Vector.OrtX, Vector.OrtZ);
             Vector d2 = translate.Multiply(dihedral.Point);
             Vector d3 = rotateAngle.Multiply(d2);
 
-            IReadOnlyMatrix reverseRotateDihedral = GetRotationMatrix(Vector.OrtY, (0, d3.Y, d3.Z));
+            IReadOnlyMatrix reverseRotateDihedral = GetRotationMatrix(Vector.OrtY, (0, d3.Y, d3.Z), Vector.OrtX);
 
             IReadOnlyMatrix rotate1 = Matrices.Rotate(Vector.OrtZ, -angle.Value);
             IReadOnlyMatrix rotate2 = Matrices.Rotate(Vector.OrtX, -dihedral.Value);
@@ -93,15 +93,14 @@ namespace ZCalc
             var v3 = reverseRotateDihedral.Multiply(v2);
             var v4 = reverseRotateAngle.Multiply(v3);
             var v5 = reverseTranslate.Multiply(v4);
-
-
+            
             return v5;
         }
 
         /// <summary>
         /// Returns rotation matrix to rotate vector1 to vector2
         /// </summary>
-        private IReadOnlyMatrix GetRotationMatrix(Vector vector1, Vector vector2)
+        private IReadOnlyMatrix GetRotationMatrix(Vector vector1, Vector vector2, Vector def)
         {
             double? cos = vector1.CosAngle(vector2);
             
@@ -112,14 +111,14 @@ namespace ZCalc
             
             if (cos.Value.AlmostEquals(-1))
             {
-                return Matrices.Rotate(Vector.OrtZ, Math.PI);
+                return Matrices.Rotate(def, Math.PI);
             }
 
             Vector axe = vector1.VectorMultiply(vector2).Normalize()!.Value;
 
             double angle = Math.Acos(cos.Value);
 
-            return Matrices.Rotate(axe, -angle);
+            return Matrices.Rotate(axe, angle);
         }
     }
 }
