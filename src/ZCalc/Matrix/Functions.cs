@@ -24,6 +24,11 @@ public static class Functions
         return Math.Sqrt(LengthSquare(vector));
     }
     
+    public static Vector Minus(this Vector vector1, Vector vector2)
+    {
+        return (vector1.X - vector2.X, vector1.Y - vector2.Y, vector1.Z - vector2.Z);
+    }
+    
     public static Vector? Normalize(this Vector vector)
     {
         double length = vector.Length();

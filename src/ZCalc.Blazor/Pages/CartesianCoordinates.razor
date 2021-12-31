@@ -1,0 +1,26 @@
+@using ZCalc.Formatters
+<div class="form-floating h-100">
+    <textarea id="cartesian" class="form-control font-monospace h-100" rows="20" readonly>@CoordinatesText</textarea>
+    <label for="cartesian">Cartesian</label>
+</div>
+
+@code {
+    private readonly CartesianMatrixFormatter _cartesianFormatter = new();
+    
+    [Parameter]
+    public CartesianMatrix? Cartesian { get; set; }
+    
+    public string CoordinatesText { get; private set; } = String.Empty;
+
+    protected override void OnParametersSet()
+    {
+        if (Cartesian != null)
+        {
+            CoordinatesText = _cartesianFormatter.Print(Cartesian);
+        }
+        else
+        {
+            CoordinatesText = String.Empty;
+        }
+    }
+}

@@ -1,0 +1,49 @@
+@using ZCalc.Formatters
+<div class="form-floating h-100">
+    <textarea id="z-matrix" class="form-control font-monospace h-100" rows="20"
+              @bind="ZMatrixText" @bind:event="oninput" @onkeyup="Parse">
+    </textarea>
+    <label for="z-matrix">Z-Matrix</label>
+</div>
+
+@code {
+    private readonly ZMatrixParser _zMatrixParser = new();
+    
+    public string ZMatrixText { get; private set; } = @"6
+1   1 R
+1   1 R  2  A
+1   1 R  2  A  3  D
+1   1 R  2  A  3 -D
+R = 1.089000
+A = 109.4710
+D = 120.0000
+";
+    
+    [Parameter]
+    public EventCallback<ChangeEventArgs> OnChange { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Parse();
+    }
+
+    private void Parse()
+    {
+        try
+        {
+            ZMatrix zMatrix = _zMatrixParser.Parse(ZMatrixText);
+
+            OnChange.InvokeAsync(new ChangeEventArgs
+            {
+                Value = zMatrix
+            });
+        }
+        catch (Exception exception)
+        {
+            OnChange.InvokeAsync(new ChangeEventArgs
+            {
+                Value = exception.Message
+            });
+        }
+    }
+}

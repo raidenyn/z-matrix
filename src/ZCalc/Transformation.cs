@@ -73,24 +73,29 @@ namespace ZCalc
             IReadOnlyMatrix translate = Matrices.Translation(distance.Point);
             Vector a1 = translate.Multiply(angle.Point);
             IReadOnlyMatrix reverseRotateAngle = GetRotationMatrix(-Vector.OrtX, a1);
-            IReadOnlyMatrix reverseRotateAngleValue = reverseRotateAngle.Multiply(Matrices.Rotate(Vector.OrtZ, -angle.Value));
             
-            IReadOnlyMatrix reverseRotateDihedralValue = zPoint.Dihedral switch
+            if (zPoint.Dihedral is not { } dihedral)
             {
-                { } dihedral => ((Func<IReadOnlyMatrix>)(() =>
-                {
-                    IReadOnlyMatrix rotateAngle = GetRotationMatrix(a1, -Vector.OrtX);
-                    Vector d2 = rotateAngle.Multiply(translate.Multiply(dihedral.Point));
-
-                    IReadOnlyMatrix reverseRotateDihedral = GetRotationMatrix(Vector.OrtY, (0, d2.Y, d2.Z));
-
-                    return reverseRotateDihedral.Multiply(Matrices.Rotate(Vector.OrtX, -dihedral.Value));
-                }))(),
-                _ => Matrices.Single
-            };
+                IReadOnlyMatrix rotate = Matrices.Rotate(Vector.OrtZ, -angle.Value);
+                return reverseTranslate.Multiply(reverseRotateAngle.Multiply(rotate.Multiply((-distance.Value, 0, 0))));
+            }
             
+            IReadOnlyMatrix rotateAngle = GetRotationMatrix(a1, -Vector.OrtX);
+            Vector d2 = translate.Multiply(dihedral.Point);
+            Vector d3 = rotateAngle.Multiply(d2);
 
-            return reverseTranslate.Multiply(reverseRotateDihedralValue.Multiply(reverseRotateAngleValue.Multiply((-distance.Value, 0, 0))));
+            IReadOnlyMatrix reverseRotateDihedral = GetRotationMatrix(Vector.OrtY, (0, d3.Y, d3.Z));
+
+            IReadOnlyMatrix rotate1 = Matrices.Rotate(Vector.OrtZ, -angle.Value);
+            IReadOnlyMatrix rotate2 = Matrices.Rotate(Vector.OrtX, -dihedral.Value);
+            var v1 = rotate1.Multiply((-distance.Value, 0, 0));
+            var v2 = rotate2.Multiply(v1);
+            var v3 = reverseRotateDihedral.Multiply(v2);
+            var v4 = reverseRotateAngle.Multiply(v3);
+            var v5 = reverseTranslate.Multiply(v4);
+
+
+            return v5;
         }
 
         /// <summary>

@@ -1,66 +1,46 @@
 @page "/z-matrix"
-@using ZCalc.Formatters
 
 <PageTitle>Z-Matrix</PageTitle>
 
 <h1>Z-Matrix</h1>
 
-<div class="container">
-    <div class="row">
+<div class="container-fluid h-100">
+    <div class="row h-100">
         <div class="col">
-            <div class="form-floating h-100">
-                <textarea id="z-matrix" class="form-control font-monospace h-100" rows="20"
-                          @bind="ZMatrix" @bind:event="oninput" @onkeyup="Transform">
-                </textarea>
-                <label for="z-matrix">Z-Matrix</label>
-            </div>
+            <ZMatrixInput OnChange="Transform"></ZMatrixInput>
         </div>
         <div class="col">
-            <div class="form-floating h-100">
-                <textarea id="cartesian" class="form-control font-monospace h-100" rows="20" readonly>@Cartesian</textarea>
-                <label for="cartesian">Cartesian</label>
-            </div>
+            <CartesianOutput Cartesian="Cartesian" Error="@Error" />
         </div>
     </div>
 </div>
 
 @code {
-    public string Cartesian { get; private set; }= String.Empty;
+    private CartesianMatrix? Cartesian { get; set; }
+    
+    private string? Error { get; set; }
 
-    public string ZMatrix { get; private set; } = @"6
-1   1 R
-1   1 R  2  A
-1   1 R  2  A  3  D
-1   1 R  2  A  3 -D
-R = 1.089000
-A = 109.4710
-D = 120.0000
-";
-
-    private readonly ZMatrixParser _zMatrixParser = new();
     
     private readonly Transformation _transformation = new();
-    
-    private readonly CartesianMatrixFormatter _cartesianFormatter = new();
 
-    protected override void OnInitialized()
-    {
-        Transform();
-    }
-
-    private void Transform()
+    private void Transform(ChangeEventArgs e)
     {
         try
         {
-            ZMatrix zMatrix = _zMatrixParser.Parse(ZMatrix);
-
-            CartesianMatrix cartesian = _transformation.ToCartesian(zMatrix);
-
-            Cartesian = _cartesianFormatter.Print(cartesian);
+            if (e.Value is ZMatrix zMatrix)
+            {
+                Cartesian = _transformation.ToCartesian(zMatrix);
+                Error = String.Empty;
+            }
+            if (e.Value is string error)
+            {
+                Cartesian = null;
+                Error = error;
+            }
         }
         catch (Exception exception)
         {
-            Cartesian = exception.Message;
+            Error = exception.Message;
         }
     }
 }

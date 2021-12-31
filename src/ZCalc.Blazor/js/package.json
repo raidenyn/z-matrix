@@ -1,0 +1,39 @@
+{
+  "name": "zcalc",
+  "version": "0.0.1",
+  "description": "ZCalc JavaScript Client App",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "yarn clean && yarn webpack:dev --watch",
+    "build": "yarn clean && yarn webpack:dev",
+    "build:prod": "yarn clean && yarn webpack:prod",
+    "webpack:dev": "yarn cross-env webpack --config=webpack.config.ts --mode=development",
+    "webpack:prod": "yarn cross-env webpack --config=webpack.config.ts --mode=production",
+    "lint": "eslint -c .eslintrc.js --ext .ts ./src/@agoda",
+    "cross-env": "cross-env TS_NODE_PROJECT=tsconfig.json",
+    "clean": "rimraf ../wwwroot/js"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "three": "^0.136.0",
+    "tslib": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "@types/three": "^0.135.0",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/eslint-plugin-tslint": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.3.0",
+    "jest": "^27.4.5",
+    "prettier": "^2.5.1",
+    "ts-jest": "^27.1.2",
+    "ts-loader": "^9.2.6",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  }
+}

@@ -17,4 +17,10 @@
       <ProjectReference Include="..\ZCalc\ZCalc.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <TypeScriptCompile Include="js\src\geometry.ts" />
+      <TypeScriptCompile Include="js\src\index.ts" />
+      <TypeScriptCompile Include="js\src\molecule.ts" />
+    </ItemGroup>
+
 </Project>

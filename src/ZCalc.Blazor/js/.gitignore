@@ -1,0 +1,11 @@
+# IDEA config files
+.idea/
+
+# local yarn log files
+yarn-error.log
+
+# Mac specific files
+.DS_Store
+
+node_modules/
+

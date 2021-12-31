@@ -1,7 +1,11 @@
+using ZCalc.Elements;
+
 namespace ZCalc.Formatters;
 
 public class ZMatrixParser
 {
+    private readonly ElementSymbols _elementSymbols = new();
+    
     public ZMatrix Parse(string text)
     {
         string[] lines = text.Split("\n");
@@ -27,7 +31,7 @@ public class ZMatrixParser
 
             string[] parts = line.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-            if (!Int32.TryParse(parts[0], out int element))
+            if (!TryParseElement(parts[0], out int element))
             {
                 throw new Exception($"Cannot parse element on line: {line}");
             }
@@ -84,6 +88,21 @@ public class ZMatrixParser
         }
     }
 
+    private bool TryParseElement(string val, out int element)
+    {
+        if (Int32.TryParse(val, out element))
+        {
+            return true;
+        }
+        if (_elementSymbols.GetElementBySymbol(val) is { } elementBySymbol)
+        {
+            element = elementBySymbol;
+            return true;
+        }
+
+        return false;
+    }
+    
     private bool TryParseValue(string val, IReadOnlyDictionary<string, double> @params, out double result)
     {
         if (Double.TryParse(val, out result))

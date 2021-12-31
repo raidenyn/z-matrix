@@ -1,0 +1,67 @@
+@using ZCalc.Elements
+@using ZCalc.Blazor.Models
+@using ZCalc.Bonds
+@inject IJSRuntime JsRunTime
+
+<div class="h-100" id="@ElementId" rows="20">
+</div>
+
+@code {
+    private const string ElementId = "molecule-view";
+        
+    private bool _initialized = false;
+    
+    private readonly ElementColors _colors = new();
+    private readonly ElementSymbols _elements = new();
+    private readonly BondsCalculator _bonds = new();
+    
+    [Parameter]
+    public CartesianMatrix? Cartesian { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JsRunTime.InvokeAsync<object>("zcalc.init", new { ElementId });
+            _initialized = true;
+            await OnParametersSetAsync();
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (_initialized)
+        {
+            if (Cartesian != null)
+            {
+                await SetMoleculeAsync(Cartesian);
+            }
+            else
+            {
+                await RemoveMoleculeAsync();
+            }
+        }
+    }
+    
+    private async Task SetMoleculeAsync(CartesianMatrix matrix)
+    {
+        int i = 1;
+        var molecule = new Molecule
+        {
+            Atoms = matrix.Rows.Select(row => new Atom
+            {
+                Element = _elements.GetSymbol(row.Element) + i++,
+                Point = row.Point,
+                Color = _colors.GetElementColor(row.Element)
+            }).ToArray(),
+            Bonds = _bonds.GetBonds(matrix).ToArray()
+        };
+
+        await JsRunTime.InvokeAsync<object>("zcalc.setMolecule", molecule);
+    }
+    
+    private async Task RemoveMoleculeAsync()
+    {
+        await JsRunTime.InvokeAsync<object>("zcalc.setMolecule", new Molecule());
+    }
+}

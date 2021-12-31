@@ -195,7 +195,7 @@ public class TransformationTests
     [Test]
     public void ZMatrixToCartesian()
     {
-        var zMatrix = new ZCalc.ZMatrix
+        var zMatrix = new ZMatrix
         {
             Rows =
             {
@@ -218,6 +218,34 @@ public class TransformationTests
                 (1, -0.362996046, -1.026720444, 0.000000000),
                 (1, -0.362996046, 0.513360222, 0.889165987),
                 (1, -0.362996046, 0.513360222, -0.889165987),
+            }
+            , result.Rows);
+    }
+    
+    [Test]
+    public void ZMatrixToCartesianEthylene()
+    {
+        var zMatrix = new ZMatrix
+        {
+            Rows =
+            {
+                1,
+                (2, 1, 2.0),
+                (3, 2, 2.0, 1, 90),
+                (4, 2, 2.0, 3, 90, 1, 90.0),
+            }
+        };
+
+        Transformation transformation = CreateTransformation();
+
+        CartesianMatrix result = transformation.ToCartesian(zMatrix);
+
+        CollectionAssert.AreEqual(new List<CartesianRow>
+            {
+                (1, 0.000000000, 0.000000000, 0.000000000),
+                (2, 2.000000000, 0.000000000, 0.000000000),
+                (3, 2.000000000, 2.000000000, 0.000000000),
+                (4, 2.000000000, 0.000000000, 2.000000000)
             }
             , result.Rows);
     }
