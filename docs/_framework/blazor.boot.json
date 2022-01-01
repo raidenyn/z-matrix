@@ -35,7 +35,7 @@
       "System.Runtime.dll": "sha256-dic0dRXtQPT6a5FzY3CpA36hQNV\/hoLONKxFsP7F3mo=",
       "System.Text.Encodings.Web.dll": "sha256-8MgxqGsBjU\/FR\/ntwAQr0x\/AG7jJ9f8Kn9shBpC23Dc=",
       "System.Text.Json.dll": "sha256-XNaEfNNFr1u2SH7T+ase89z\/LBr4iaBl7NxLdgHMhm0=",
-      "ZCalc.Blazor.dll": "sha256-wgmqgUd6kb5PLlAkjju92V5NJegGWgRmlM1a8C+G\/lg=",
+      "ZCalc.Blazor.dll": "sha256-bnLCicU3H\/\/Fs3ICNjFaP2ZdfGxxQCM\/sdMNmJxe6fo=",
       "ZCalc.dll": "sha256-AE3j9h6e0wvHyn7NlEQOT9\/NJzFa8HYg3uRz0W10rW0="
     },
     "extensions": null,
@@ -43,9 +43,9 @@
     "libraryInitializers": null,
     "pdb": null,
     "runtime": {
-      "dotnet.6.0.1.fko8ykqw22.js": "sha256-u7JiIrhTSUhHcHNle00gobbFQg0kVj3NPIJ38Coq36I=",
+      "dotnet.6.0.1.fko8ykqw22.js": "sha256-Ktcvw6s8lDmbw8tYFmdZweNvL+kgLAhn9czl+\/FioOU=",
       "dotnet.timezones.blat": "sha256-2kYo2V\/aZ7htYEvY5PVJlrMYhFf1jH8\/VS+SP7B7QUg=",
-      "dotnet.wasm": "sha256-X7IYQ4xSbeXm9MnVz8F4AVB4XRual6RikVEKUpJx+Y8=",
+      "dotnet.wasm": "sha256-e8iln8LyBDapAAGF8K2VBKTs4Eb+ur2s1lw2ItHjUmk=",
       "icudt_CJK.dat": "sha256-WPyI4hWDPnOw62Nr27FkzGjdbucZnQD+Ph+GOPhAedw=",
       "icudt_EFIGS.dat": "sha256-4RwaPx87Z4dvn77ie\/ro3\/QzyS+\/gGmO3Y\/0CSAXw4k=",
       "icudt_no_CJK.dat": "sha256-OxylFgLJlFqixsj+nLxYVsv5iZLvfIKMpLf9hrWaChA=",
