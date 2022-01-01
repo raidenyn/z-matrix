@@ -1,3 +1,4 @@
+using System.Globalization;
 using ZCalc.Elements;
 
 namespace ZCalc.Formatters;
@@ -105,7 +106,7 @@ public class ZMatrixParser
     
     private bool TryParseValue(string val, IReadOnlyDictionary<string, double> @params, out double result)
     {
-        if (Double.TryParse(val, out result))
+        if (Double.TryParse(val, NumberStyles.Any, NumberFormatInfo.InvariantInfo, out result))
         {
             return true;
         }
