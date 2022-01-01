@@ -5,6 +5,7 @@
 project.lock.json
 .DS_Store
 *.pyc
+node_modules/
 
 # Visual Studio Code
 .vscode
@@ -29,7 +30,7 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
-node_modules/
+wwwroot/js/
 
 # IDEs
 .vs/

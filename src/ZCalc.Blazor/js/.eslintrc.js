@@ -10,12 +10,10 @@ module.exports = {
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "project": __dirname + "/src/@agoda/tsconfig.json",
+        "project": __dirname + "/src/tsconfig.json",
         "sourceType": "module"
     },
     "plugins": [
-        "eslint-plugin-prefer-arrow",
-        "eslint-plugin-jsdoc",
         "@typescript-eslint"
     ]
 };

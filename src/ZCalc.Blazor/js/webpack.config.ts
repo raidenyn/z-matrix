@@ -1,10 +1,11 @@
 import * as path from 'path'
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
 const rootDir = path.resolve(__dirname)
 const srcDir = path.resolve(rootDir, 'src')
-const outputDir = path.resolve(rootDir, '../wwwroot/js')
+const outputDir = path.resolve(rootDir, '../wwwroot')
 
-export default (() => ({
+export default ((_, argv) => ({
     devtool: 'source-map',
     entry: {
         'zcalc': path.resolve(srcDir, 'index.ts'),
@@ -24,12 +25,22 @@ export default (() => ({
         }],
     },
     output: {
-        filename: '[name].js',
-        path: outputDir,
+        filename: '[name].[hash].js',
+        path: path.resolve(outputDir, 'js'),
         libraryTarget: 'umd',
         library: "zcalc",
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(srcDir, 'index.html'),
+            filename:  path.resolve(outputDir, 'index.html'),
+            minify: false,
+            inject: 'body',
+            scriptLoading: 'blocking',
+            base: argv.mode === 'production' ? '/z-matrix/' : '/'
+        })
+    ]
 }))

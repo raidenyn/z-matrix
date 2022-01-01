@@ -10,7 +10,7 @@
     "build:prod": "yarn clean && yarn webpack:prod",
     "webpack:dev": "yarn cross-env webpack --config=webpack.config.ts --mode=development",
     "webpack:prod": "yarn cross-env webpack --config=webpack.config.ts --mode=production",
-    "lint": "eslint -c .eslintrc.js --ext .ts ./src/@agoda",
+    "lint": "eslint -c .eslintrc.js --ext .ts ./src",
     "cross-env": "cross-env TS_NODE_PROJECT=tsconfig.json",
     "clean": "rimraf ../wwwroot/js"
   },
@@ -27,6 +27,7 @@
     "@typescript-eslint/parser": "^5.8.1",
     "eslint": "^8.5.0",
     "eslint-config-prettier": "^8.3.0",
+    "html-webpack-plugin": "^5.5.0",
     "jest": "^27.4.5",
     "prettier": "^2.5.1",
     "ts-jest": "^27.1.2",

@@ -3,10 +3,12 @@ import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRend
 import {TrackballControls} from "three/examples/jsm/controls/TrackballControls"
 import {Molecule} from "./molecule"
 import {getGeometry} from "./geometry"
-let camera, scene, renderer, labelRenderer
-let controls
+import {PerspectiveCamera, Group, WebGLRenderer, Scene} from "three";
 
-let root
+let camera: PerspectiveCamera, scene: Scene, renderer: WebGLRenderer, labelRenderer: CSS2DRenderer
+let controls: TrackballControls
+
+let root: Group
 
 const offset = new THREE.Vector3()
 
@@ -64,7 +66,7 @@ export function setMolecule(molecule: Molecule) {
     while ( root.children.length > 0 ) {
 
         const object = root.children[ 0 ]
-        object.parent.remove( object )
+        object?.parent?.remove( object )
 
     }
 
@@ -109,7 +111,7 @@ export function setMolecule(molecule: Molecule) {
 
         const text = document.createElement( 'div' )
         text.className = 'label'
-        text.style.color = 'rgb(' + atom.color.r + ',' + atom.color.g + ',' + atom.color.b + ')'
+        text.style.color = `rgb(${atom.color.r},${atom.color.g},${atom.color.b})`
         text.textContent = atom.element
 
         const label = new CSS2DObject( text )
@@ -136,7 +138,7 @@ export function setMolecule(molecule: Molecule) {
         start.multiplyScalar( 75 )
         end.multiplyScalar( 75 )
 
-        const object = new THREE.Mesh( boxGeometry, new THREE.MeshPhongMaterial( 0xffffff as any) )
+        const object = new THREE.Mesh( boxGeometry, new THREE.MeshPhongMaterial( { color: 0xffffff } ) )
         object.position.copy( start )
         object.position.lerp( end, 0.5 )
         object.scale.set( 5, 5, start.distanceTo( end ) )

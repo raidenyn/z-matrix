@@ -16,16 +16,29 @@
     <ItemGroup>
       <ProjectReference Include="..\ZCalc\ZCalc.csproj" />
     </ItemGroup>
+    
+    <Target Name="BuildJavaScript" BeforeTargets="BeforePublish">
+        <Exec Command="yarn install" WorkingDirectory="./js" />
+        <Exec Command="yarn build:prod" WorkingDirectory="./js" />
 
-    <ItemGroup>
-      <TypeScriptCompile Include="js\src\geometry.ts" />
-      <TypeScriptCompile Include="js\src\index.ts" />
-      <TypeScriptCompile Include="js\src\molecule.ts" />
-    </ItemGroup>
+        <ItemGroup>
+            <_ContentIncludedByDefault Include="wwwroot\js\**\*" />
+        </ItemGroup>
+    </Target>
 
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="wwwroot\js\zcalc.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\js\zcalc.js.map" />
-    </ItemGroup>
+    <Target Name="ReorgonizeOutput" AfterTargets="AfterPublish">
+        <PropertyGroup>
+            <PublishOutputPath>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/../../docs'))</PublishOutputPath>
+            <PublishOutputWwwRoot>$(MSBuildProjectDirectory)/$(OutputPath)publish/wwwroot</PublishOutputWwwRoot>
+        </PropertyGroup>
+        <Message Text="Source: $(PublishOutputPath)" Importance="high" />
+        <Message Text="Target: $(PublishOutputWwwRoot)" Importance="high" />
+        
+        <RemoveDir Directories="$(PublishOutputPath)" />
 
+        <ItemGroup>
+            <WwwRootFiles Include="$(PublishOutputWwwRoot)/**/*.*" />
+        </ItemGroup>
+        <Copy SourceFiles="@(WwwRootFiles)" DestinationFiles="@(WwwRootFiles->'$(PublishOutputPath)/%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    </Target>
 </Project>
