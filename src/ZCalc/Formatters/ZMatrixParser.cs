@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text.RegularExpressions;
 using ZCalc.Elements;
 
 namespace ZCalc.Formatters;
@@ -6,6 +7,8 @@ namespace ZCalc.Formatters;
 public class ZMatrixParser
 {
     private readonly ElementSymbols _elementSymbols = new();
+
+    private static readonly Regex ElementIndexRemoved = new Regex(@"(\w)\d*", RegexOptions.Compiled);
     
     public ZMatrix Parse(string text)
     {
@@ -23,16 +26,19 @@ public class ZMatrixParser
 
     private IEnumerable<ZRow> GetCoords(IEnumerable<string> lines, IReadOnlyDictionary<string, double> @params)
     {
+        Dictionary<string, int> aliases = new();
+        int index = 0;
         foreach (string line in lines)
         {
             if (String.IsNullOrWhiteSpace(line) || line.Contains("="))
             {
                 yield break;
             }
+            index++;
 
             string[] parts = line.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-            if (!TryParseElement(parts[0], out int element))
+            if (!TryParseElement(parts[0], index, aliases, out int element))
             {
                 throw new Exception($"Cannot parse element on line: {line}");
             }
@@ -43,7 +49,7 @@ public class ZMatrixParser
                 continue;
             }
             
-            if (!Int32.TryParse(parts[1], out int refD))
+            if (!TryParseReference(parts[1], aliases, out int refD))
             {
                 throw new Exception($"Cannot parse distance reference on line: {line}");
             }
@@ -59,7 +65,7 @@ public class ZMatrixParser
                 continue;
             }
             
-            if (!Int32.TryParse(parts[3], out int refA))
+            if (!TryParseReference(parts[3], aliases, out int refA))
             {
                 throw new Exception($"Cannot parse angle reference on line: {line}");
             }
@@ -75,7 +81,7 @@ public class ZMatrixParser
                 continue;
             }
             
-            if (!Int32.TryParse(parts[5], out int refT))
+            if (!TryParseReference(parts[5], aliases, out int refT))
             {
                 throw new Exception($"Cannot parse dihedral reference on line: {line}");
             }
@@ -89,15 +95,38 @@ public class ZMatrixParser
         }
     }
 
-    private bool TryParseElement(string val, out int element)
+    private bool TryParseElement(string val, int index, Dictionary<string, int> aliases, out int element)
     {
-        if (Int32.TryParse(val, out element))
+        if (Int32.TryParse(val, NumberStyles.Any, NumberFormatInfo.InvariantInfo, out element))
         {
             return true;
         }
-        if (_elementSymbols.GetElementBySymbol(val) is { } elementBySymbol)
+
+        string symbol = ElementIndexRemoved.Replace(val, "$1");
+
+        if (symbol != val)
+        {
+            aliases.Add(val, index);
+        }
+        
+        if (_elementSymbols.GetElementBySymbol(symbol) is { } elementBySymbol)
         {
             element = elementBySymbol;
+            return true;
+        }
+
+        return false;
+    }
+    
+    private bool TryParseReference(string val, Dictionary<string, int> aliases, out int index)
+    {
+        if (Int32.TryParse(val, NumberStyles.Any, NumberFormatInfo.InvariantInfo, out index))
+        {
+            return true;
+        }
+
+        if (aliases.TryGetValue(val, out index))
+        {
             return true;
         }
 
