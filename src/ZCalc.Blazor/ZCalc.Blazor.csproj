@@ -23,4 +23,9 @@
       <TypeScriptCompile Include="js\src\molecule.ts" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\js\zcalc.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\zcalc.js.map" />
+    </ItemGroup>
+
 </Project>

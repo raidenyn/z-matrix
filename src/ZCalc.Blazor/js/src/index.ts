@@ -12,10 +12,12 @@ const offset = new THREE.Vector3()
 
 export function init(params: { elementId: string }) {
 
+    const container = document.getElementById( params.elementId ) ?? new HTMLElement()
+    
     scene = new THREE.Scene()
     scene.background = new THREE.Color( 0x7b79c4 )
 
-    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 5000 )
+    camera = new THREE.PerspectiveCamera( 70, container.offsetWidth / container.offsetHeight, 1, 5000 )
     camera.position.z = 1000
     scene.add( camera )
 
@@ -31,8 +33,6 @@ export function init(params: { elementId: string }) {
     scene.add( root )
 
     //
-
-    const container = document.getElementById( params.elementId ) ?? new HTMLElement()
     
     renderer = new THREE.WebGLRenderer( { antialias: true } )
     renderer.setPixelRatio( window.devicePixelRatio )
@@ -47,7 +47,7 @@ export function init(params: { elementId: string }) {
     labelRenderer.domElement.style.pointerEvents = 'none'
     container.appendChild( labelRenderer.domElement )
     //
-
+ 
     controls = new TrackballControls( camera, renderer.domElement )
     controls.minDistance = 500
     controls.maxDistance = 2000
@@ -155,7 +155,7 @@ function onContainerResize(entries: ResizeObserverEntry[])
 {
     if (resize) {
         const container = entries[0].target as HTMLElement
-        camera.aspect = container.offsetHeight / container.offsetWidth
+        camera.aspect = container.offsetWidth / container.offsetHeight
         camera.updateProjectionMatrix()
 
         renderer.setSize( container.offsetWidth, container.offsetHeight )

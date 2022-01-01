@@ -1,7 +1,47 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Z-Calculator</PageTitle>
 
-<h1>Hello, Z-Matrix!</h1>
+<h1>Z-Calculator</h1>
+<small class="text-muted">Edit z-matrix and see your changes at the right side</small>
 
-Switch to Z-Matrix tab and start modify your Z-Matrix.
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col">
+            <ZMatrixInput OnChange="Transform"></ZMatrixInput>
+        </div>
+        <div class="col">
+            <CartesianOutput Cartesian="Cartesian" Error="@Error" />
+        </div>
+    </div>
+</div>
+
+@code {
+    private CartesianMatrix? Cartesian { get; set; }
+    
+    private string? Error { get; set; }
+
+    
+    private readonly Transformation _transformation = new();
+
+    private void Transform(ChangeEventArgs e)
+    {
+        try
+        {
+            if (e.Value is ZMatrix zMatrix)
+            {
+                Cartesian = _transformation.ToCartesian(zMatrix);
+                Error = String.Empty;
+            }
+            if (e.Value is string error)
+            {
+                Cartesian = null;
+                Error = error;
+            }
+        }
+        catch (Exception exception)
+        {
+            Error = exception.Message;
+        }
+    }
+}
