@@ -16,6 +16,13 @@
     <ItemGroup>
       <ProjectReference Include="..\ZCalc\ZCalc.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Content Include=".gitignore">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
     
     <Target Name="BuildJavaScript" BeforeTargets="BeforePublish">
         <Exec Command="yarn install" WorkingDirectory="./js" />
