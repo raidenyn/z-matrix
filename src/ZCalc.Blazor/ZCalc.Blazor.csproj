@@ -38,8 +38,8 @@
             <PublishOutputPath>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/../../build'))</PublishOutputPath>
             <PublishOutputWwwRoot>$(MSBuildProjectDirectory)/$(OutputPath)publish/wwwroot</PublishOutputWwwRoot>
         </PropertyGroup>
-        <Message Text="Source: $(PublishOutputPath)" Importance="high" />
-        <Message Text="Target: $(PublishOutputWwwRoot)" Importance="high" />
+        <Message Text="Source: $(PublishOutputWwwRoot)" Importance="high" />
+        <Message Text="Target: $(PublishOutputPath)" Importance="high" />
         
         <RemoveDir Directories="$(PublishOutputPath)" />
 

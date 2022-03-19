@@ -36,6 +36,7 @@ jobs:
           cd src/ZCalc.Blazor
           dotnet publish
           cd ../..
+          ls -la build
       
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.5
