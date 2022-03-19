@@ -24,6 +24,13 @@ jobs:
         with:
           node-version: '16'
       
+      - name: Cache Objects
+        id: cache-obj
+        uses: actions/cache@v2
+        with:
+          path: src/ZCalc.Blazor/obj
+          key: ${{ runner.os }}-obj
+
       - name: Build
         run: |
           cd src/ZCalc.Blazor
