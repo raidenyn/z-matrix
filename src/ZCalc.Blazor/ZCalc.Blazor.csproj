@@ -29,8 +29,8 @@
         <Exec Command="yarn build:prod" WorkingDirectory="./js" />
 
         <PropertyGroup>
-            <PublishOutputJsSource>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/wwwroot/js'))</PublishOutputJsSource>
-            <PublishOutputJsTarget>$(MSBuildProjectDirectory)/$(OutputPath)publish/wwwroot/js</PublishOutputJsTarget>
+            <PublishOutputJsSource>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/wwwroot'))</PublishOutputJsSource>
+            <PublishOutputJsTarget>$(MSBuildProjectDirectory)/$(OutputPath)publish/wwwroot</PublishOutputJsTarget>
         </PropertyGroup>
         <Message Text="Source: $(PublishOutputJsSource)" Importance="high" />
         <Message Text="Target: $(PublishOutputJsTarget)" Importance="high" />
