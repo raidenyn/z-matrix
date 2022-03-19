@@ -39,8 +39,7 @@ export default ((_, argv) => ({
             filename:  path.resolve(outputDir, 'index.html'),
             minify: false,
             inject: 'body',
-            scriptLoading: 'blocking',
-            base: argv.mode === 'production' ? '/z-matrix/' : '/'
+            scriptLoading: 'blocking'
         })
     ]
 }))
