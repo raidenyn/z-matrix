@@ -24,13 +24,17 @@
       </Content>
     </ItemGroup>
     
-    <Target Name="BuildJavaScript" BeforeTargets="BeforePublish">
+    <Target Name="BuildJavaScript" BeforeTargets="BeforePublish" Condition=" '$(BuildJavaScriptStatus)' != 'Done' ">
         <Exec Command="yarn install" WorkingDirectory="./js" />
         <Exec Command="yarn build:prod" WorkingDirectory="./js" />
 
         <ItemGroup>
             <_ContentIncludedByDefault Include="wwwroot\js\**\*" />
         </ItemGroup>
+
+        <PropertyGroup>
+            <BuildJavaScriptStatus>Done</BuildJavaScriptStatus>
+        </PropertyGroup>
     </Target>
 
     <Target Name="ReorgonizeOutput" AfterTargets="AfterPublish">
