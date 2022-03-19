@@ -23,23 +23,31 @@
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>
     </ItemGroup>
-    
-    <Target Name="BuildJavaScript" BeforeTargets="BeforePublish">
+
+    <Target Name="BuildJavaScript" AfterTargets="AfterPublish">
         <Exec Command="yarn install" WorkingDirectory="./js" />
         <Exec Command="yarn build:prod" WorkingDirectory="./js" />
 
-        <ItemGroup>
-            <_ContentIncludedByDefault Include="wwwroot\js\**\*" />
-        </ItemGroup>
-    </Target>
-
-    <Target Name="ReorgonizeOutput" AfterTargets="AfterPublish">
         <PropertyGroup>
-            <PublishOutputPath>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/../../docs'))</PublishOutputPath>
+            <PublishOutputJsSource>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/wwwroot'))</PublishOutputJsSource>
+            <PublishOutputJsTarget>$(MSBuildProjectDirectory)/$(OutputPath)publish/wwwroot</PublishOutputJsTarget>
+        </PropertyGroup>
+        <Message Text="Source: $(PublishOutputJsSource)" Importance="high" />
+        <Message Text="Target: $(PublishOutputJsTarget)" Importance="high" />
+
+        <ItemGroup>
+            <PublishOutputJsFiles Include="$(PublishOutputJsSource)/**/*.*" />
+        </ItemGroup>
+        <Copy SourceFiles="@(PublishOutputJsFiles)" DestinationFiles="@(PublishOutputJsFiles->'$(PublishOutputJsTarget)/%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    </Target>
+    
+    <Target Name="ReorgonizeOutput" AfterTargets="BuildJavaScript">
+        <PropertyGroup>
+            <PublishOutputPath>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/../../build'))</PublishOutputPath>
             <PublishOutputWwwRoot>$(MSBuildProjectDirectory)/$(OutputPath)publish/wwwroot</PublishOutputWwwRoot>
         </PropertyGroup>
-        <Message Text="Source: $(PublishOutputPath)" Importance="high" />
-        <Message Text="Target: $(PublishOutputWwwRoot)" Importance="high" />
+        <Message Text="Source: $(PublishOutputWwwRoot)" Importance="high" />
+        <Message Text="Target: $(PublishOutputPath)" Importance="high" />
         
         <RemoveDir Directories="$(PublishOutputPath)" />
 

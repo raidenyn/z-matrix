@@ -5,7 +5,7 @@ const rootDir = path.resolve(__dirname)
 const srcDir = path.resolve(rootDir, 'src')
 const outputDir = path.resolve(rootDir, '../wwwroot')
 
-export default ((_, argv) => ({
+export default (() => ({
     devtool: 'source-map',
     entry: {
         'zcalc': path.resolve(srcDir, 'index.ts'),
@@ -39,8 +39,7 @@ export default ((_, argv) => ({
             filename:  path.resolve(outputDir, 'index.html'),
             minify: false,
             inject: 'body',
-            scriptLoading: 'blocking',
-            base: argv.mode === 'production' ? '/z-matrix/' : '/'
+            scriptLoading: 'blocking'
         })
     ]
 }))

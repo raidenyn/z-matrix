@@ -1,0 +1,44 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: '6.0.x'
+      - name: Install wasm-tools
+        run: dotnet workload install wasm-tools
+      - name: Setup NodeJs
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      
+      - name: Cache Objects
+        id: cache-obj
+        uses: actions/cache@v2
+        with:
+          path: src/ZCalc.Blazor/obj
+          key: ${{ runner.os }}-obj
+
+      - name: Build
+        run: |
+          cd src/ZCalc.Blazor
+          dotnet publish
+          cd ../..
+          ls -la build
+      
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build # The folder the action should deploy.
