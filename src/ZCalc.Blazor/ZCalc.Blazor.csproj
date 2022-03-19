@@ -35,7 +35,7 @@
 
     <Target Name="ReorgonizeOutput" AfterTargets="AfterPublish">
         <PropertyGroup>
-            <PublishOutputPath>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/../../docs'))</PublishOutputPath>
+            <PublishOutputPath>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/../../build'))</PublishOutputPath>
             <PublishOutputWwwRoot>$(MSBuildProjectDirectory)/$(OutputPath)publish/wwwroot</PublishOutputWwwRoot>
         </PropertyGroup>
         <Message Text="Source: $(PublishOutputPath)" Importance="high" />
