@@ -1,6 +1,9 @@
 name: publish
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -21,9 +24,10 @@ jobs:
           node-version: '16'
       
       - name: Build
-        run: cd src/ZCalc.Blazor
-        run: dotnet publish
-        run: cd ../..
+        run: |
+          cd src/ZCalc.Blazor
+          dotnet publish
+          cd ../..
       
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.5
